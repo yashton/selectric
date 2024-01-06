@@ -68,7 +68,7 @@ include <SelectricElement88.scad>
 //LetterText(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, "8");
 
 // preview text at the given pitch
-//TextGauge("This is example text at 12 pitch", 12);
+//DebugTextGauge("This is example text at 12 pitch", 12);
 
 // render the full type ball
 difference() {
@@ -208,7 +208,6 @@ CHARACTER_LONGITUDE = 360 / CHARACTERS_PER_LATITUDE; // For Selectric I and II
 
 EPSILON = 0.001; // to fix z-fighting in preview
 
-
 FACE_SCALE = 2.25;
 
 // ---------------------------------------------------
@@ -251,24 +250,37 @@ charmap88 =
     40, 37, 15, 23, 20, 22, 42, 33, 19, 24, 13,
     27, 26, 32, 41, 43, 29, 11, 21, 12, 17, 10 ];
 
+module Selectric88Place(l, p, f, letter)
+{
+    tiltAngle = (2-l) * TILT_ANGLE + (l==0?TOP_ROW_ADJUSTMENT:0);
+    GlobalPosition(TYPEBALL_RAD, tiltAngle, (f+5-p)*CHARACTER_LONGITUDE, ROW_TILT_ADJUST[l])
+        LetterText(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);
+}
+
+module Selectric88PlaceUpper(l, p, letter)
+{
+    Selectric88Place(l, p, 0, letter);
+}
+
+module Selectric88PlaceLower(l, p, letter)
+{
+    Selectric88Place(l, p, CHARACTERS_PER_LATITUDE/2, letter);
+}
+
 module SelectricLayout88()
 {
     ROWCHARS = CHARACTERS_PER_LATITUDE/2;
 
     for ( l=[0:3] )
     {
-        tiltAngle = (2-l) * TILT_ANGLE + (l==0?TOP_ROW_ADJUSTMENT:0);
-
         for ( p=[0:ROWCHARS-1] )
         {
-            GlobalPosition(TYPEBALL_RAD, tiltAngle, (5-p)*CHARACTER_LONGITUDE, ROW_TILT_ADJUST[l])
-            LetterText(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, LOWER_CASE[charmap88[ROWCHARS*l+p]]);
+            Selectric88PlaceLower(l, p, LOWER_CASE[charmap88[ROWCHARS*l+p]]);
         }
 
         for ( p=[0:ROWCHARS-1] )
         {
-            GlobalPosition(TYPEBALL_RAD, tiltAngle, (ROWCHARS+5-p)*CHARACTER_LONGITUDE, ROW_TILT_ADJUST[l])
-            LetterText(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, UPPER_CASE[charmap88[ROWCHARS*l+p]]);
+            Selectric88PlaceUpper(l, p, UPPER_CASE[charmap88[ROWCHARS*l+p]]);
         }
     }
 }
@@ -490,7 +502,7 @@ module Ribs()
 }
 
 // tool for determining correct LETTER_HEIGHT
-module TextGauge(str, pitch)
+module DebugTextGauge(str, pitch)
 {
     for ( i = [0:len(str)] )
     {

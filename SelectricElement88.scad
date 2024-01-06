@@ -21,7 +21,7 @@ module Labels()
 
         translate([0,0.6,0])
         text(TYPEBALL_FONT, size=2, font=TYPEBALL_FONT, halign="center");
-        
+
 //        translate([0,-1.6,0])
 //        text("Mono", size=2, font=TYPEBALL_FONT, halign="center");
     }
@@ -108,7 +108,7 @@ TypeBall();
 // Original project notes:
 // ----------------------------------------
 //
-// NOTE1:   USING A REGULAR FDM PRINTER MAY NOT ACHIEVE THE RESOLUTION REQUIRED, PERHAPS A RESIN PRINT 
+// NOTE1:   USING A REGULAR FDM PRINTER MAY NOT ACHIEVE THE RESOLUTION REQUIRED, PERHAPS A RESIN PRINT
 //          WOULD WORK BETTER
 // NOTE2:   THIS IS FOR AMUSEMENT PURPOSES ONLY, NOT INTENDED FOR SERIOUS USE. HAVE FUN!
 // NOTE3:   I AM NOT RESPONSIBLE FOR ANY DAMAGE THIS PRINT MAY CAUSE TO YOUR TYPEWRITER, USE AT OWN RISK.
@@ -116,7 +116,7 @@ TypeBall();
 // In memory of John Thompson, an Australian IBM OPCE from whom I "inherited" his Selectric CE tool set:
 //      http://qccaustralia.org/vale.htm
 //
-// Copyright (C) Steve Malikoff 2020 
+// Copyright (C) Steve Malikoff 2020
 // Written in Brisbane, Australia
 // LAST UPDATE  20200125
 
@@ -125,7 +125,7 @@ TypeBall();
 // Font and cosmetic parameters
 // ---------------------------------------------------
 
-// See SelectricElementExample.scad for parameters expected to be defined before including this one. 
+// See SelectricElementExample.scad for parameters expected to be defined before including this one.
 
 // ---------------------------------------------------
 // Typeball dimensions
@@ -216,7 +216,7 @@ module TypeBall()
         {
             SelectricLayout88();
             TrimTop();
-            
+
             if ( !is_undef(TRIM_DESCENDERS) && TRIM_DESCENDERS )
             {
                 // trim any bits that extended into the detent teeth
@@ -247,11 +247,11 @@ charmap88 =
 module SelectricLayout88()
 {
     ROWCHARS = CHARACTERS_PER_LATITUDE/2;
-    
+
     for ( l=[0:3] )
     {
         tiltAngle = (2-l) * TILT_ANGLE + (l==0?TOP_ROW_ADJUSTMENT:0);
-        
+
         for ( p=[0:ROWCHARS-1] )
         {
             GlobalPosition(TYPEBALL_RAD, tiltAngle, (5-p)*CHARACTER_LONGITUDE, ROW_TILT_ADJUST[l])
@@ -271,8 +271,8 @@ module GlobalPosition(r, latitude, longitude, rotAdjust)
 {
     x = r * cos(latitude);
     y = 0;
-    z = r * sin(latitude); 
-    
+    z = r * sin(latitude);
+
     rotate([0, 0, longitude])
     translate([x, y, z])
     rotate([0, 90 - latitude - rotAdjust, 0])
@@ -284,7 +284,7 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
 {
     $fn = $preview ? 12 : 24;
     faceScale = 2.25;
- 
+
     rotate([0,180,90])
     minkowski()
     {
@@ -309,7 +309,7 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
             }
 
         }
- 
+
         cylinder(h=someHeight, r1=0, r2=0.75*someHeight);
     }
 }
@@ -329,18 +329,18 @@ module HollowBall()
 module Ball()
 {
     arbitraryRemovalBlockHeight = 20;
-    
+
     // Basic ball, trimmed flat top and bottom
     difference()
     {
         sphere(r=TYPEBALL_RAD, $fn=$preview ? 40 : 160);
- 
+
         translate([-50,-50, TYPEBALL_TOP_ABOVE_CENTRE-EPSILON])
             cube([100,100,arbitraryRemovalBlockHeight]);
-        
+
         translate([-50,-50, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - arbitraryRemovalBlockHeight])   // ball/skirt fudge factor
             cube([100,100,arbitraryRemovalBlockHeight]);
-        
+
         intersection()
         {
             sphere(r=sqrt(INSIDE_RAD^2+INSIDE_CURVE_START^2), $fn=$preview ? 60 : 160);
@@ -366,7 +366,7 @@ module DetentTeethSkirt()
     {
         translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT])
         cylinder(r2=TYPEBALL_SKIRT_TOP_RAD, r1=TYPEBALL_SKIRT_BOTTOM_RAD, h=SKIRT_HEIGHT, $fn=160);
-        
+
         translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT-EPSILON])
         DetentTeeth();
     }
@@ -397,7 +397,7 @@ module Tooth()
 module TopFace()
 {
     r = sqrt(TYPEBALL_RAD^2-TYPEBALL_TOP_ABOVE_CENTRE^2);
-    
+
     // Fill top back in, after the inside sphere was subtracted before this fn was called
     difference()
     {
@@ -406,12 +406,12 @@ module TopFace()
 
         translate([0, 0, TYPEBALL_TOP_ABOVE_CENTRE - TYPEBALL_TOP_THICKNESS - RIB_HEIGHT - EPSILON])
         cylinder(h=RIB_HEIGHT/2, r1=r, r2=0);
-            
+
         translate([0, 0, TYPEBALL_TOP_ABOVE_CENTRE - TYPEBALL_TOP_THICKNESS - RIB_HEIGHT - EPSILON])
         cylinder(r=BOSS_INNER_RAD,h=TYPEBALL_TOP_THICKNESS*2+RIB_HEIGHT);
-        
+
         Del();
-    }   
+    }
 }
 
 // Alignment marker triangle on top face
@@ -449,7 +449,7 @@ module CentreBoss()
 
         translate([0,0,-EPSILON])
         cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON);
-    }    
+    }
 }
 
 // The full-length slot in the tilt ring boss at the (not quite) half past one o'clock position
@@ -469,12 +469,12 @@ module Notch()
     cube([NOTCH_DEPTH + BOSS_INNER_RAD, NOTCH_WIDTH, NOTCH_HEIGHT + EPSILON]);
 }
 
-// The reinforcement spokes on the underside of the top face, from the tilt ring boss 
+// The reinforcement spokes on the underside of the top face, from the tilt ring boss
 // to the inner sphere wall
 module Ribs()
 {
     segment = 360 / RIBS;
-    
+
     for (i=[0:RIBS - 1])
     {
         rotate([0, 5, -360.0/44 + segment * i])

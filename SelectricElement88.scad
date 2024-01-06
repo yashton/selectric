@@ -203,6 +203,9 @@ CHARACTER_LONGITUDE = 360 / CHARACTERS_PER_LATITUDE; // For Selectric I and II
 
 EPSILON = 0.001; // to fix z-fighting in preview
 
+
+FACE_SCALE = 2.25;
+
 // ---------------------------------------------------
 // Rendering
 // ---------------------------------------------------
@@ -283,7 +286,6 @@ module GlobalPosition(r, latitude, longitude, rotAdjust)
 module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiameter=40)
 {
     $fn = $preview ? 12 : 24;
-    faceScale = 2.25;
 
     rotate([0,180,90])
     minkowski()
@@ -296,7 +298,7 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
             offset(CHARACTER_WEIGHT_ADJUSTMENT)
             minkowski()
             {
-                text(size=someTypeSize * faceScale, font=typeballFont, halign="center", someLetter);
+                text(size=someTypeSize * FACE_SCALE, font=typeballFont, halign="center", someLetter);
                 polygon([[-HORIZONTAL_WEIGHT_ADJUSTMENT/2,0],[HORIZONTAL_WEIGHT_ADJUSTMENT/2,0],[HORIZONTAL_WEIGHT_ADJUSTMENT/2,EPSILON],[-HORIZONTAL_WEIGHT_ADJUSTMENT/2,EPSILON]]);
             }
 
@@ -488,13 +490,10 @@ module TextGauge(str, pitch)
 {
     for ( i = [0:len(str)] )
     {
-        // scale factor from LetterText() function, must match!
-        faceScale = 2.25;
-
         translate([8,8])
         translate([i*22/pitch,-LETTER_HEIGHT/2])
         scale([0.5,0.5,0.1])
         offset(CHARACTER_WEIGHT_ADJUSTMENT)
-        text(size=LETTER_HEIGHT * faceScale, font=TYPEBALL_FONT, halign="center", str[i]);
+        text(size=LETTER_HEIGHT * FACE_SCALE, font=TYPEBALL_FONT, halign="center", str[i]);
     }
 }

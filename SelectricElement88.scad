@@ -71,7 +71,12 @@ include <SelectricElement88.scad>
 //TextGauge("This is example text at 12 pitch", 12);
 
 // render the full type ball
-TypeBall();
+difference() {
+    TypeBall();
+    FontLabel()
+       Labels();
+}
+
 
 // ---------- END ----------
 */
@@ -235,7 +240,6 @@ module TypeBall()
         if (SLOT) Slot();
         Notch();
         Del();
-        FontName();
     }
 }
 
@@ -426,12 +430,12 @@ module Del()
 }
 
 // Emboss a label onto top face
-module FontName()
+module FontLabel()
 {
     translate([-8.5, 0, TYPEBALL_TOP_ABOVE_CENTRE - DEL_DEPTH])
     rotate([0,0,270])
     linear_extrude(DEL_DEPTH+0.01)
-    Labels();
+        children();
 }
 
 // Clean up any base girth bits of T0-ring characters projecting above top face

@@ -146,12 +146,14 @@ ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ];
 PLATEN_DIA = 45;
 
 // Rendering granularity for F5 preview and F6 render. Rendering takes a while.
-PREVIEW_FACETS = 22;
-RENDER_FACETS = 44;
+LETTER_FN = $preview ? 12 : 24;
+PLATEN_FN = $preview ? 60 : 360;
+FACETS_FN = $preview ? 22 : 44;
+HOLLOW_FN = $preview ? 60 : 360;
+BALL_FN = $preview ? 40 : 160;
+BALL_INTERIOR_FN = $preview ? 60 : 160;
 
-FACETS = $preview ? PREVIEW_FACETS : RENDER_FACETS;
-FONT_FACETS = FACETS;
-$fn = FACETS;
+$fn = FACETS_FN;
 
 // --- probably shouldn't mess with stuff below ---
 
@@ -187,6 +189,7 @@ TOOTH_PEAK_OFFSET_FROM_CENTRE = 6.1; // Lateral offset of the tilt ring detent p
 // Parameters for the centre boss that goes onto tilt ring spigot (upper ball socket)
 BOSS_INNER_RAD = 4.35;
 BOSS_OUTER_RAD = 5.8;
+REINFORCE_THICK = 2.921;
 BOSS_HEIGHT = 8.07;
 NOTCH_ANGLE = 131.8; // Must be exact! If not, ball doesn't detent correctly
 NOTCH_WIDTH = 1.1; // Should be no slop here, either
@@ -301,7 +304,7 @@ module GlobalPosition(r, latitude, longitude, rotAdjust)
 //// generate reversed embossed text, tapered outwards to ball surface, face curved to match platen
 module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiameter=40)
 {
-    $fn = $preview ? 12 : 24;
+    $fn = LETTER_FN;
 
     rotate([0,180,90])
     minkowski()
@@ -322,8 +325,8 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
             rotate([0,90,0])
             difference()
             {
-                cylinder(h=100, r=platenDiameter/2+0.01, center=true, $fn=$preview ? 60 : 360);
-                cylinder(h=100, r=platenDiameter/2, center=true, $fn=$preview ? 60 : 360);
+                cylinder(h=100, r=platenDiameter/2+0.01, center=true, $fn=PLATEN_FN);
+                cylinder(h=100, r=platenDiameter/2, center=true, $fn=PLATEN_FN);
             }
 
         }
@@ -339,7 +342,7 @@ module HollowBall()
     {
         Ball();
         translate([0,0,-20+INSIDE_CURVE_START])
-            cylinder(r=INSIDE_RAD, h=20, $fn=$preview ? 60 : 360); // needs to be smooth!
+            cylinder(r=INSIDE_RAD, h=20, $fn=HOLLOW_FN); // needs to be smooth!
     }
     Ribs();
 }
@@ -351,7 +354,7 @@ module Ball()
     // Basic ball, trimmed flat top and bottom
     difference()
     {
-        sphere(r=TYPEBALL_RAD, $fn=$preview ? 40 : 160);
+        sphere(r=TYPEBALL_RAD, $fn=BALL_FN);
 
         translate([-50,-50, TYPEBALL_TOP_ABOVE_CENTRE-EPSILON])
             cube([100,100,arbitraryRemovalBlockHeight]);
@@ -361,7 +364,7 @@ module Ball()
 
         intersection()
         {
-            sphere(r=sqrt(INSIDE_RAD^2+INSIDE_CURVE_START^2), $fn=$preview ? 60 : 160);
+            sphere(r=sqrt(INSIDE_RAD^2+INSIDE_CURVE_START^2), $fn=BALL_INTERIOR_FN);
             translate([-20,-20,INSIDE_CURVE_START-EPSILON])
                 cube([40,40,20]);
         }
@@ -373,6 +376,7 @@ module Ball()
     // Detent teeth skirt
     DetentTeethSkirt();
     CentreBoss();
+    ReinforceBoss();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -470,6 +474,18 @@ module CentreBoss()
     }
 }
 
+module ReinforceBoss()
+{
+    translate([0,0, TYPEBALL_TOP_ABOVE_CENTRE - BOSS_HEIGHT])
+    difference()
+    {
+        translate([0,0,NOTCH_HEIGHT])
+        cylinder(r=BOSS_OUTER_RAD+REINFORCE_THICK, h=BOSS_HEIGHT- NOTCH_HEIGHT);
+
+        translate([0,0,NOTCH_HEIGHT-EPSILON])
+        cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON);
+    }
+}
 // The full-length slot in the tilt ring boss at the (not quite) half past one o'clock position
 // XXX - S2 doesn't use this. Which Selectric does? Composer?
 module Slot()

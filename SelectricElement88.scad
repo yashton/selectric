@@ -502,14 +502,13 @@ module Ribs()
 }
 
 // tool for determining correct LETTER_HEIGHT
-module DebugTextGauge(str, pitch)
+module DebugTextGauge(sample, height, pitch)
 {
-    for ( i = [0:len(str)] )
+    for ( i = [0:len(sample)] )
     {
-        translate([8,8])
-        translate([i*22/pitch,-LETTER_HEIGHT/2])
+        translate([i*22/pitch,-height/2])
         scale([0.5,0.5,0.1])
         offset(CHARACTER_WEIGHT_ADJUSTMENT)
-        text(size=LETTER_HEIGHT * FACE_SCALE, font=TYPEBALL_FONT, halign="center", str[i]);
+        text(size=height * FACE_SCALE, font=TYPEBALL_FONT, halign="center", sample[i]);
     }
 }

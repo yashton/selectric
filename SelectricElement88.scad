@@ -132,6 +132,37 @@ difference() {
 
 // See SelectricElementExample.scad for parameters expected to be defined before including this one.
 
+TYPEBALL_FONT = "Courier";
+
+// The font height, adjusted for the desired pitch
+// (Note that this is multiplied by faceScale=2.25 in LetterText())
+LETTER_HEIGHT = 2.75;
+
+// Keyboard layout
+
+LOWER_CASE = str(
+    "1234567890-=",
+    "qwertyuiop½",
+    "asdfghjkl;'",
+    "zxcvbnm,./"
+);
+
+UPPER_CASE = str(
+    "!@#$%¢&*()_+",
+    "QWERTYUIOP¼",
+    "ASDFGHJKL:\"",
+    "ZXCVBNM,.?"
+);
+
+// Offset each glyph by this amount, making the characters heavier or lighter
+CHARACTER_WEIGHT_ADJUSTMENT = 0;
+
+// balance the vertical smear with extra horizontal weight
+HORIZONTAL_WEIGHT_ADJUSTMENT = 0.2;
+
+// If g/j/p/q/y in bottom row extend into the detent teeth area, we'll need to trim them back out
+TRIM_DESCENDERS = true;
+
 // ---------------------------------------------------
 // Typeball dimensions
 // ---------------------------------------------------
@@ -145,13 +176,14 @@ ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ];
 // amount of curvature on the letter faces. Using a value a bit larger than the actual platen seems to give a better print
 PLATEN_DIA = 45;
 
-// Rendering granularity for F5 preview and F6 render. Rendering takes a while.
+// Rendering granularity for F5 preview and F6 render. Rendering takes a while. The render values are probably excessive, particularly the platen.
 LETTER_FN = $preview ? 12 : 24;
 PLATEN_FN = $preview ? 60 : 360;
 FACETS_FN = $preview ? 22 : 44;
 HOLLOW_FN = $preview ? 60 : 360;
 BALL_FN = $preview ? 40 : 160;
 BALL_INTERIOR_FN = $preview ? 60 : 160;
+LOFT_FN = 5;
 
 $fn = FACETS_FN;
 
@@ -189,7 +221,6 @@ TOOTH_PEAK_OFFSET_FROM_CENTRE = 6.1; // Lateral offset of the tilt ring detent p
 // Parameters for the centre boss that goes onto tilt ring spigot (upper ball socket)
 BOSS_INNER_RAD = 4.35;
 BOSS_OUTER_RAD = 5.8;
-REINFORCE_THICK = 2.921;
 BOSS_HEIGHT = 8.07;
 NOTCH_ANGLE = 131.8; // Must be exact! If not, ball doesn't detent correctly
 NOTCH_WIDTH = 1.1; // Should be no slop here, either
@@ -220,22 +251,6 @@ FACE_SCALE = 2.25;
 // The entire typeball model proper.
 module TypeBall()
 {
-    if ( is_undef(PREVIEW_LABEL) || !PREVIEW_LABEL )
-    {
-        difference()
-        {
-            SelectricLayout88();
-            TrimTop();
-
-            if ( !is_undef(TRIM_DESCENDERS) && TRIM_DESCENDERS )
-            {
-                // trim any bits that extended into the detent teeth
-                translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT-EPSILON])
-                DetentTeeth();
-            }
-        }
-    }
-
     difference()
     {
         HollowBall();
@@ -243,6 +258,23 @@ module TypeBall()
         Notch();
         Del();
     }
+
+    if ( is_undef(PREVIEW_LABEL) || !PREVIEW_LABEL )
+    {
+        difference()
+        {
+            SelectricLayout88();
+
+            if ( !is_undef(TRIM_DESCENDERS) && TRIM_DESCENDERS )
+            {
+                TrimTop();
+                // trim any bits that extended into the detent teeth
+                translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT-EPSILON])
+                DetentTeeth();
+            }
+        }
+    }
+
 }
 
 
@@ -331,7 +363,7 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
 
         }
 
-        cylinder(h=someHeight, r1=0, r2=0.75*someHeight);
+        cylinder(h=someHeight, r1=0, r2=0.75*someHeight, $fn=LOFT_FN);
     }
 }
 
@@ -376,7 +408,6 @@ module Ball()
     // Detent teeth skirt
     DetentTeethSkirt();
     CentreBoss();
-    ReinforceBoss();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -474,18 +505,6 @@ module CentreBoss()
     }
 }
 
-module ReinforceBoss()
-{
-    translate([0,0, TYPEBALL_TOP_ABOVE_CENTRE - BOSS_HEIGHT])
-    difference()
-    {
-        translate([0,0,NOTCH_HEIGHT])
-        cylinder(r=BOSS_OUTER_RAD+REINFORCE_THICK, h=BOSS_HEIGHT- NOTCH_HEIGHT);
-
-        translate([0,0,NOTCH_HEIGHT-EPSILON])
-        cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON);
-    }
-}
 // The full-length slot in the tilt ring boss at the (not quite) half past one o'clock position
 // XXX - S2 doesn't use this. Which Selectric does? Composer?
 module Slot()

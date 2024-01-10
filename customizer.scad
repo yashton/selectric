@@ -5,12 +5,9 @@ PREVIEW_LABEL = true;
 // enable to render sample text
 FONT_DEMO = false;
 
-DEMO_12_HEIGHT = 2.3; // .01
+DEMO_12_HEIGHT = 2.3; // .001
 
-DEMO_10_HEIGHT = 2.75; // .01
-
-REINFORCE_BOSS = false;
-SPINDLE_INSERT = false;
+DEMO_10_HEIGHT = 2.75; // .001
 
 /* [Font] */
 // The name of the font, as understood by the system. Note: if the system doesn't recognize the font it will silently fall back to a default!
@@ -20,7 +17,7 @@ TYPEBALL_FONT = "Courier";
 TYPEBALL_FACE = "";
 
 // The font height (in mm), adjusted for the desired pitch (Note that this is multiplied by faceScale=2.25 in LetterText())
-LETTER_HEIGHT = 2.75;
+LETTER_HEIGHT = 2.75; // 0.001
 
 // Label on top of ball
 TYPEBALL_LABEL = "Courier";
@@ -90,10 +87,9 @@ module Labels()
     }
 }
 
-REINFORCE_THICK = 2.921;
 
 if (FONT_DEMO) {
-    for (pitch = [10, 12]) {
+    for (pitch = [10,12]) {
         shift = pitch == 10 ? 0 : -40;
         height = pitch == 10 ? DEMO_10_HEIGHT : DEMO_12_HEIGHT;
         translate([8,30+shift,0])
@@ -101,53 +97,19 @@ if (FONT_DEMO) {
         translate([8,25+shift,0])
             DebugTextGauge("abcdefghijklmnopqrstuvwxyz",height,pitch);
         translate([8,20+shift,0])
-            DebugTextGauge("The quick brown fox jumps over the lazy dog",height,pitch);
+            DebugTextGauge("|The quick brown fox jumps over the lazy dog|",height,pitch);
         translate([8,15+shift,0])
             DebugTextGauge(UPPER_CASE, height, pitch);
         translate([8,10+shift,0])
             DebugTextGauge(LOWER_CASE, height, pitch);
     }
+
+
 } else {
     // render the full type ball
     difference() {
-        if (REINFORCE_BOSS) {
-            union() {
-                TypeBall();
-                ReinforceBoss();
-            }
-        } else {
-            TypeBall();
-        }
+        TypeBall();
         FontLabel()
             Labels();
-        if (SPINDLE_INSERT) {
-            SpindleInsert();
-        }
-    }
-}
-
-module ReinforceBoss()
-{
-    translate([0,0, TYPEBALL_TOP_ABOVE_CENTRE - BOSS_HEIGHT])
-    difference()
-    {
-        translate([0,0,NOTCH_HEIGHT])
-        cylinder(r=BOSS_OUTER_RAD+REINFORCE_THICK, h=BOSS_HEIGHT- NOTCH_HEIGHT);
-
-        translate([0,0,NOTCH_HEIGHT-EPSILON])
-        cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON);
-    }
-}
-
-module SpindleInsert()
-{
-    rotate([0, 0, NOTCH_ANGLE])
-    translate([0,0, TYPEBALL_TOP_ABOVE_CENTRE - 10 - TYPEBALL_TOP_THICKNESS - 1])
-    difference() {
-        cylinder(r=17.145/2,h=10);
-        translate([BOSS_OUTER_RAD,-9,0])
-            cube([10, 18, 10]);
-        translate([-BOSS_OUTER_RAD-10,-9,0])
-            cube([10, 18, 10]);
     }
 }

@@ -65,6 +65,38 @@
       "TYPEBALL_LABEL_SPACING": "1.2",
       "TYPEBALL_PITCH": "12 Bold"
     },
+    "Courier_10": {
+      "CHARACTER_WEIGHT_ADJUSTMENT": "0",
+      "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
+      "LETTER_HEIGHT": "2.4",
+      "TRIM_DESCENDERS": "true",
+      "TYPEBALL_FACE": "",
+      "TYPEBALL_FONT": "Courier Prime:style=Light",
+      "TYPEBALL_LABEL": "Courier",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_OFFSET": "0.6",
+      "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
+      "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1.2",
+      "TYPEBALL_PITCH": "10"
+    },
+    "Courier_12": {
+      "CHARACTER_WEIGHT_ADJUSTMENT": "0",
+      "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
+      "LETTER_HEIGHT": "2.0",
+      "TRIM_DESCENDERS": "true",
+      "TYPEBALL_FACE": "",
+      "TYPEBALL_FONT": "Courier Prime:style=Light",
+      "TYPEBALL_LABEL": "Courier",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_OFFSET": "0.6",
+      "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
+      "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1.2",
+      "TYPEBALL_PITCH": "12"
+    },
     "DIN_1451_10": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",

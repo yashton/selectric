@@ -1,6 +1,6 @@
 {
   "fileFormatVersion": "1",
-    "parameterSets": {
+  "parameterSets": {
     "Beteckna_10": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
@@ -9,14 +9,14 @@
       "TYPEBALL_FACE": "BetecknaGS",
       "TYPEBALL_FONT": "BetecknaGS",
       "TYPEBALL_LABEL": "Beteckna",
-            "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_OFFSET": "0.6",
       "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
       "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
-            "TYPEBALL_LABEL_SIZE": "2",
-            "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
       "TYPEBALL_PITCH": "10"
-        },
+    },
     "Beteckna_10_Bold": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
@@ -25,14 +25,14 @@
       "TYPEBALL_FACE": "BetecknaGS",
       "TYPEBALL_FONT": "BetecknaGS:style=Bold",
       "TYPEBALL_LABEL": "Beteckna",
-            "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_OFFSET": "0.6",
       "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
       "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
-            "TYPEBALL_LABEL_SIZE": "2",
-            "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
       "TYPEBALL_PITCH": "10 Bold"
-        },
+    },
     "Beteckna_12": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
@@ -41,14 +41,14 @@
       "TYPEBALL_FACE": "BetecknaGS",
       "TYPEBALL_FONT": "BetecknaGS",
       "TYPEBALL_LABEL": "Beteckna",
-            "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_OFFSET": "0.6",
       "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
       "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
       "TYPEBALL_LABEL_SIZE": "2",
       "TYPEBALL_LABEL_SPACING": "1.2",
       "TYPEBALL_PITCH": "12"
-        },
+    },
     "Beteckna_12_Bold": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
@@ -57,7 +57,7 @@
       "TYPEBALL_FACE": "BetecknaGS",
       "TYPEBALL_FONT": "BetecknaGS:style=Bold",
       "TYPEBALL_LABEL": "Beteckna",
-            "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_OFFSET": "0.6",
       "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
       "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
@@ -132,13 +132,13 @@
     "Dijkstra_10": {
       "LETTER_HEIGHT": "2.5",
       "TYPEBALL_FACE": "Dijkstra",
-            "TYPEBALL_FONT": "Dijkstra",
-            "TYPEBALL_LABEL": "Dijkstra",
-            "TYPEBALL_LABEL2": "",
-            "TYPEBALL_LABEL_SIZE": "2",
-            "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_FONT": "Dijkstra",
+      "TYPEBALL_LABEL": "Dijkstra",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
       "TYPEBALL_PITCH": "10"
-     },
+    },
     "Dijkstra_12": {
       "LETTER_HEIGHT": "2.0",
       "TYPEBALL_FACE": "Dijkstra",

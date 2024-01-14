@@ -290,13 +290,13 @@ module Selectric88Place(l, p, f)
         children();
 }
 
-module Selectric88PlaceUpper(l, p, letter)
+module Selectric88PlaceLower(l, p, letter)
 {
     Selectric88Place(l, p, 0)
         LetterTextNew(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);
 }
 
-module Selectric88PlaceLower(l, p, letter)
+module Selectric88PlaceUpper(l, p, letter)
 {
     Selectric88Place(l, p, CHARACTERS_PER_LATITUDE/2)
         LetterTextNew(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);

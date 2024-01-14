@@ -19,6 +19,8 @@ TYPEBALL_FACE = "";
 // The font height (in mm), adjusted for the desired pitch (Note that this is multiplied by faceScale=2.25 in LetterText())
 LETTER_HEIGHT = 2.75; // 0.001
 
+LETTER_ALTITUDE = 0.72;
+
 // Label on top of ball
 TYPEBALL_LABEL = "Courier";
 // Second label line

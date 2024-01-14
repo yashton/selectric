@@ -177,15 +177,13 @@ ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ];
 PLATEN_DIA = 45;
 
 // Rendering granularity for F5 preview and F6 render. Rendering takes a while. The render values are probably excessive, particularly the platen.
-LETTER_FN = $preview ? 12 : 24;
-PLATEN_FN = $preview ? 60 : 360;
-FACETS_FN = $preview ? 22 : 44;
-HOLLOW_FN = $preview ? 60 : 360;
-BALL_FN = $preview ? 40 : 160;
-BALL_INTERIOR_FN = $preview ? 60 : 160;
+LETTER_FN = 12;
+PLATEN_FN = 60;
+FACETS_FN = 30;
+HOLLOW_FN = 60;
+BALL_FN = 60;
+BALL_INTERIOR_FN = 60;
 LOFT_FN = 5;
-
-$fn = FACETS_FN;
 
 // --- probably shouldn't mess with stuff below ---
 
@@ -338,7 +336,7 @@ module GlobalPosition(r, latitude, longitude, rotAdjust)
 //// generate reversed embossed text, tapered outwards to ball surface, face curved to match platen
 module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiameter=40)
 {
-    $fn = LETTER_FN;
+    $fn = 24;
 
     rotate([0,180,90])
     minkowski()
@@ -371,10 +369,9 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
 
 module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
 {
-    depth=0.121;
     // Platen just needs to be wider than letter.
     PLATEN_WIDTH=height*5;
-    typeBaseline = height/2;
+    typeBaseline = -typeSize/2;
     rotate([0,0,90])
     translate([0,0,-2*height]) // remove additional height from the minkowski
     minkowski() {
@@ -392,7 +389,7 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
                 cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=PLATEN_FN);
         }
         // Flared base for the letter.
-        cylinder(h=height*2, r1=height, r2=0, $fn=BASE_FN);
+        cylinder(h=height*2, r1=2*height, r2=0, $fn=LOFT_FN);
     }
 }
 

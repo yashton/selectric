@@ -46,14 +46,20 @@ HORIZONTAL_WEIGHT_ADJUSTMENT = 0.2; // .01
 // If g/j/p/q/y in bottom row extend into the detent teeth area, we'll need to trim them back out
 TRIM_DESCENDERS = true;
 
+// How far the type's contact face projects outwards above the ball surface
+LETTER_ALTITUDE = 0.72;
+
+// Tweak tilt of characters per row for better descenders/balance. Ordered top to bottom. Amount is backwards rotation: top goes back and bottom goes forward
+ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ]; // .1
+
 /* [Resolution] */
-LETTER_FN = 24;
-PLATEN_FN = 64;
-FACETS_FN = 128;
-HOLLOW_FN = 128;
-BALL_FN = 128;
-BALL_INTERIOR_FN = 128;
-LOFT_FN = 5;
+LETTER_FN = 12;
+PLATEN_FN = 30;
+FACETS_FN = 30;
+HOLLOW_FN = 30;
+BALL_FN = 30;
+BALL_INTERIOR_FN = 30;
+LOFT_FN = 4;
 
 LOWER_CASE = str(
     "1234567890-=",

@@ -407,8 +407,8 @@
     },
     "JetBrains_10": {
       "LETTER_HEIGHT": "2.053125",
-      "TYPEBALL_FACE": "Jetbrains Mono",
-      "TYPEBALL_FONT": "Jetbrains Mono",
+      "TYPEBALL_FACE": "JetBrains Mono",
+      "TYPEBALL_FONT": "JetBrains Mono",
       "TYPEBALL_LABEL": "JetBrains",
       "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_SIZE": "2",
@@ -417,8 +417,8 @@
     },
     "JetBrains_12": {
       "LETTER_HEIGHT": "1.711125",
-      "TYPEBALL_FACE": "Jetbrains Mono",
-      "TYPEBALL_FONT": "Jetbrains Mono",
+      "TYPEBALL_FACE": "JetBrains Mono",
+      "TYPEBALL_FONT": "JetBrains Mono",
       "TYPEBALL_LABEL": "JetBrains",
       "TYPEBALL_LABEL2": "",
       "TYPEBALL_LABEL_SIZE": "2",
@@ -700,32 +700,6 @@
       "TYPEBALL_LABEL_SPACING": "1.2",
       "TYPEBALL_PITCH": "12"
     },
-    "Nimbus_Roman_10": {
-      "CHARACTER_WEIGHT_ADJUSTMENT": "0",
-      "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
-      "LETTER_HEIGHT": "2.6999999999999997",
-      "TRIM_DESCENDERS": "true",
-      "TYPEBALL_FACE": "NimbusRomMonM",
-      "TYPEBALL_FONT": "NimbusRomMonM",
-      "TYPEBALL_LABEL": "Nimbus",
-      "TYPEBALL_LABEL2": "Roman",
-      "TYPEBALL_LABEL_OFFSET": "0.6",
-      "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
-      "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
-      "TYPEBALL_LABEL_SIZE": "2",
-      "TYPEBALL_LABEL_SPACING": "1",
-      "TYPEBALL_PITCH": "10"
-    },
-    "Nimbus_Roman_12": {
-      "LETTER_HEIGHT": "2.25",
-      "TYPEBALL_FACE": "NimbusRomMonM",
-      "TYPEBALL_FONT": "NimbusRomMonM",
-      "TYPEBALL_LABEL": "Nimbus",
-      "TYPEBALL_LABEL2": "Roman",
-      "TYPEBALL_LABEL_SIZE": "2",
-      "TYPEBALL_LABEL_SPACING": "1",
-      "TYPEBALL_PITCH": "12"
-    },
     "Nouveau_IBM_10": {
       "CHARACTER_WEIGHT_ADJUSTMENT": "0",
       "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
@@ -822,6 +796,26 @@
       "TYPEBALL_LABEL_SPACING": "1.2",
       "TYPEBALL_PITCH": "12"
     },
+    "Roboto_10": {
+      "LETTER_HEIGHT": "2.701",
+      "TYPEBALL_FACE": "Roboto Mono",
+      "TYPEBALL_FONT": "Roboto Mono",
+      "TYPEBALL_LABEL": "Roboto",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_PITCH": "10"
+    },
+    "Roboto_12": {
+      "LETTER_HEIGHT": "2.251",
+      "TYPEBALL_FACE": "Roboto Mono",
+      "TYPEBALL_FONT": "Roboto Mono",
+      "TYPEBALL_LABEL": "Roboto",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_PITCH": "12"
+    },
     "Senatorial_10_12": {
       "LETTER_HEIGHT": "2.8125",
       "TYPEBALL_FACE": "Senatorial",
@@ -831,6 +825,35 @@
       "TYPEBALL_LABEL_SIZE": "2",
       "TYPEBALL_LABEL_SPACING": "0.8",
       "TYPEBALL_PITCH": "10/12"
+    },
+    "Space_Mono_10": {
+      "CHARACTER_WEIGHT_ADJUSTMENT": "0",
+      "HORIZONTAL_WEIGHT_ADJUSTMENT": "0.2",
+      "LETTER_HEIGHT": "2.657",
+      "TRIM_DESCENDERS": "true",
+      "TYPEBALL_FACE": "Space Mono",
+      "TYPEBALL_FONT": "Space Mono",
+      "TYPEBALL_LABEL": "Space Mono",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_OFFSET": "0.6",
+      "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
+      "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_PITCH": "10"
+    },
+    "Space_Mono_12": {
+      "LETTER_HEIGHT": "2.214",
+      "TYPEBALL_FACE": "Space Mono",
+      "TYPEBALL_FONT": "Space Mono",
+      "TYPEBALL_LABEL": "Space Mono",
+      "TYPEBALL_LABEL2": "",
+      "TYPEBALL_LABEL_OFFSET": "0.6",
+      "TYPEBALL_LABEL_OFFSET_FIRST": "-0.6",
+      "TYPEBALL_LABEL_OFFSET_SECOND": "1.8",
+      "TYPEBALL_LABEL_SIZE": "2",
+      "TYPEBALL_LABEL_SPACING": "1",
+      "TYPEBALL_PITCH": "12"
     },
     "Vogue_10": {
       "LETTER_HEIGHT": "2.25",

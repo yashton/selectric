@@ -1,0 +1,62 @@
+Fonts used in generated binary files are licensed under the following
+licenses.
+
+=======================================================================
+NK57 Monospace is licensed under the Typedermic EULA.
+
+https://typodermicfonts.com/end-user-license-agreement/
+
+=======================================================================
+Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+Altinn DIN
+https://github.com/Altinn/altinn-din
+
+Formera (Futura Renner)
+https://github.com/noirblancrouge/Formera
+
+Courier Prime
+IBM PLex Mono
+Inconsolata
+JetBrains
+League Spartan
+Oswald
+Xanh Mono
+https://github.com/google/fonts/
+
+QTFuture
+https://www.ctan.org/tex-archive/fonts/qualitype/
+
+=======================================================================
+Djikstra
+by Reuben Thomas
+https://rrt.sc3d.org/Design/Font/Dijkstra/
+
+=======================================================================
+BSD 3-clause
+
+IBM 3270
+https://github.com/rbanffy/3270font
+=======================================================================
+GNU GPL v.3 with Embedded Font Exception
+
+BetecknaGS
+https://github.com/jeffmcneill/beteckna
+
+=======================================================================
+Apache License Version 2.0
+
+Roboto Mono
+https://github.com/google/fonts/
+=======================================================================
+Public Domain
+
+Nouveau IBM
+by Arto Hatanpää
+https://www.dafont.com/nouveau-ibm.font
+
+=======================================================================
+Senatorial
+Vogue
+by Dave Hayden
+https://selectricrescue.org/

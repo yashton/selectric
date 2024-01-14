@@ -285,21 +285,23 @@ charmap88 =
     40, 37, 15, 23, 20, 22, 42, 33, 19, 24, 13,
     27, 26, 32, 41, 43, 29, 11, 21, 12, 17, 10 ];
 
-module Selectric88Place(l, p, f, letter)
+module Selectric88Place(l, p, f)
 {
     tiltAngle = (2-l) * TILT_ANGLE + (l==0?TOP_ROW_ADJUSTMENT:0);
     GlobalPosition(TYPEBALL_RAD, tiltAngle, (f+5-p)*CHARACTER_LONGITUDE, ROW_TILT_ADJUST[l])
-        LetterText(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);
+        children();
 }
 
 module Selectric88PlaceUpper(l, p, letter)
 {
-    Selectric88Place(l, p, 0, letter);
+    Selectric88Place(l, p, 0)
+        LetterTextNew(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);
 }
 
 module Selectric88PlaceLower(l, p, letter)
 {
-    Selectric88Place(l, p, CHARACTERS_PER_LATITUDE/2, letter);
+    Selectric88Place(l, p, CHARACTERS_PER_LATITUDE/2)
+        LetterTextNew(LETTER_HEIGHT, LETTER_ALTITUDE, TYPEBALL_FONT, letter);
 }
 
 module SelectricLayout88()
@@ -364,6 +366,33 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
         }
 
         cylinder(h=someHeight, r1=0, r2=0.75*someHeight, $fn=LOFT_FN);
+    }
+}
+
+module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
+{
+    depth=0.121;
+    // Platen just needs to be wider than letter.
+    PLATEN_WIDTH=height*5;
+    typeBaseline = height/2;
+    rotate([0,0,90])
+    translate([0,0,-2*height]) // remove additional height from the minkowski
+    minkowski() {
+        // Curve letter
+        difference() {
+            // set baseline relative to platen
+            translate([0,typeBaseline,0])
+            // Extrude letter
+            linear_extrude(height=2*height)
+            mirror([1,0,0])
+                text(size=typeSize, font=typeballFont, halign="center", letter, $fn=LETTER_FN);
+            // Platen
+            translate([-PLATEN_WIDTH/2,0,platenDiameter/2+height])
+                rotate([0,90,0])
+                cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=PLATEN_FN);
+        }
+        // Flared base for the letter.
+        cylinder(h=height*2, r1=height, r2=0, $fn=BASE_FN);
     }
 }
 

@@ -13,13 +13,23 @@ DEMO_10_HEIGHT = 2.75; // .001
 // The name of the font, as understood by the system. Note: if the system doesn't recognize the font it will silently fall back to a default!
 TYPEBALL_FONT = "Courier";
 
-// Font to be used on labels, defaults to TYPEBALL_FONT if not specified.
-TYPEBALL_FACE = "";
-
 // The font height (in mm), adjusted for the desired pitch (Note that this is multiplied by faceScale=2.25 in LetterText())
 LETTER_HEIGHT = 2.75; // 0.001
 
 LETTER_ALTITUDE = 0.72;
+
+// Offset each glyph by this amount, making the characters heavier or lighter
+CHARACTER_WEIGHT_ADJUSTMENT = 0.0; // .01
+
+// balance the vertical smear with extra horizontal weight
+HORIZONTAL_WEIGHT_ADJUSTMENT = 0.2; // .01
+
+// If g/j/p/q/y in bottom row extend into the detent teeth area, we'll need to trim them back out
+TRIM_DESCENDERS = true;
+
+/* [Label] */
+// Font to be used on labels, defaults to TYPEBALL_FONT if not specified.
+TYPEBALL_LABEL_FONT = "";
 
 // Label on top of ball
 TYPEBALL_LABEL = "Courier";
@@ -37,29 +47,10 @@ TYPEBALL_LABEL_OFFSET_FIRST = -0.6; // .1
 TYPEBALL_LABEL_OFFSET_SECOND = 1.8; // .1
 TYPEBALL_LABEL_OFFSET = 0.6; // .1
 
-// Offset each glyph by this amount, making the characters heavier or lighter
-CHARACTER_WEIGHT_ADJUSTMENT = 0.0; // .01
-
-// balance the vertical smear with extra horizontal weight
-HORIZONTAL_WEIGHT_ADJUSTMENT = 0.2; // .01
-
-// If g/j/p/q/y in bottom row extend into the detent teeth area, we'll need to trim them back out
-TRIM_DESCENDERS = true;
-
-// How far the type's contact face projects outwards above the ball surface
-LETTER_ALTITUDE = 0.72;
-
-// Tweak tilt of characters per row for better descenders/balance. Ordered top to bottom. Amount is backwards rotation: top goes back and bottom goes forward
-ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ]; // .1
-
 /* [Resolution] */
-LETTER_FN = 12;
-PLATEN_FN = 30;
-FACETS_FN = 30;
-HOLLOW_FN = 30;
-BALL_FN = 30;
-BALL_INTERIOR_FN = 30;
-LOFT_FN = 4;
+LETTER_FN = 24;
+BASE_FN=60;
+LOFT_FN = 5;
 
 LOWER_CASE = str(
     "1234567890-=",
@@ -78,19 +69,19 @@ UPPER_CASE = str(
 // Labels on the top of the ball, cosmetic
 module Labels()
 {
-    face = len(TYPEBALL_FACE) > 0 ? TYPEBALL_FACE : TYPEBALL_FONT;
+    label_font = len(TYPEBALL_LABEL_FONT) > 0 ? TYPEBALL_LABEL_FONT : TYPEBALL_FONT;
     offset(r=0.12)
     {
         translate([-0.1,14,0])
-            text(TYPEBALL_PITCH, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=face, halign="center");
+            text(TYPEBALL_PITCH, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=label_font, halign="center");
         if (len(TYPEBALL_LABEL2) > 0) {
             translate([0,TYPEBALL_LABEL_OFFSET_SECOND,0])
-            text(TYPEBALL_LABEL, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=face, halign="center");
+            text(TYPEBALL_LABEL, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=label_font, halign="center");
             translate([0,TYPEBALL_LABEL_OFFSET_FIRST,0])
-            text(TYPEBALL_LABEL2, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=face, halign="center");
+            text(TYPEBALL_LABEL2, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=label_font, halign="center");
         } else {
             translate([0,TYPEBALL_LABEL_OFFSET,0])
-            text(TYPEBALL_LABEL, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=face, halign="center");
+            text(TYPEBALL_LABEL, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=label_font, halign="center");
         }
     }
 }

@@ -176,13 +176,16 @@ ROW_TILT_ADJUST = [ 0, 0.5, 1, 2 ];
 // amount of curvature on the letter faces. Using a value a bit larger than the actual platen seems to give a better print
 PLATEN_DIA = 45;
 
-// Rendering granularity for F5 preview and F6 render. Rendering takes a while. The render values are probably excessive, particularly the platen.
+// Rendering granularity for F5 preview and F6 render. Rendering takes a while. The render values are probably excessive, but adjust as needed.
 LETTER_FN = 12;
-PLATEN_FN = 60;
-FACETS_FN = 30;
-HOLLOW_FN = 60;
-BALL_FN = 60;
-BALL_INTERIOR_FN = 60;
+BASE_FN = 60;
+PLATEN_FN = undef;
+HOLLOW_FN = undef;
+BALL_FN = undef;
+SKIRT_FN = undef;
+BOSS_FN = undef;
+BALL_INTERIOR_FN = undef;
+// Keeping this small reduces the number of points for the minkowski. Use 3, 4, 5, or 6 depending on the shape you want.
 LOFT_FN = 5;
 
 // --- probably shouldn't mess with stuff below ---
@@ -336,8 +339,7 @@ module GlobalPosition(r, latitude, longitude, rotAdjust)
 //// generate reversed embossed text, tapered outwards to ball surface, face curved to match platen
 module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiameter=40)
 {
-    $fn = 24;
-
+    platen_fn = is_undef(PLATEN_FN) ? BASE_FN : PLATEN_FN;
     rotate([0,180,90])
     minkowski()
     {
@@ -349,7 +351,7 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
             offset(CHARACTER_WEIGHT_ADJUSTMENT)
             minkowski()
             {
-                text(size=someTypeSize * FACE_SCALE, font=typeballFont, halign="center", someLetter);
+                text(size=someTypeSize * FACE_SCALE, font=typeballFont, halign="center", someLetter, $fn=LETTER_FN);
                 polygon([[-HORIZONTAL_WEIGHT_ADJUSTMENT/2,0],[HORIZONTAL_WEIGHT_ADJUSTMENT/2,0],[HORIZONTAL_WEIGHT_ADJUSTMENT/2,EPSILON],[-HORIZONTAL_WEIGHT_ADJUSTMENT/2,EPSILON]]);
             }
 
@@ -357,8 +359,8 @@ module LetterText(someTypeSize, someHeight, typeballFont, someLetter, platenDiam
             rotate([0,90,0])
             difference()
             {
-                cylinder(h=100, r=platenDiameter/2+0.01, center=true, $fn=PLATEN_FN);
-                cylinder(h=100, r=platenDiameter/2, center=true, $fn=PLATEN_FN);
+                cylinder(h=100, r=platenDiameter/2+0.01, center=true, $fn=platen_fn);
+                cylinder(h=100, r=platenDiameter/2, center=true, $fn=platen_fn);
             }
 
         }
@@ -371,6 +373,8 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
 {
     // Platen just needs to be wider than letter.
     PLATEN_WIDTH=height*5;
+    platen_fn = is_undef(PLATEN_FN) ? BASE_FN : PLATEN_FN;
+
     typeBaseline = -typeSize/2;
     rotate([0,0,90])
     translate([0,0,-2*height]) // remove additional height from the minkowski
@@ -386,7 +390,7 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
             // Platen
             translate([-PLATEN_WIDTH/2,0,platenDiameter/2+height])
                 rotate([0,90,0])
-                cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=PLATEN_FN);
+                cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=platen_fn);
         }
         // Flared base for the letter.
         cylinder(h=height*2, r1=2*height, r2=0, $fn=LOFT_FN);
@@ -396,11 +400,13 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
 // The unadorned ball shell with internal ribs
 module HollowBall()
 {
+    hollow_fn = is_undef(HOLLOW_FN) ? BASE_FN : HOLLOW_FN;
+
     difference()
     {
         Ball();
         translate([0,0,-20+INSIDE_CURVE_START])
-            cylinder(r=INSIDE_RAD, h=20, $fn=HOLLOW_FN); // needs to be smooth!
+            cylinder(r=INSIDE_RAD, h=20, $fn=hollow_fn); // needs to be smooth!
     }
     Ribs();
 }
@@ -408,11 +414,13 @@ module HollowBall()
 module Ball()
 {
     arbitraryRemovalBlockHeight = 20;
+    ball_fn = is_undef(BALL_FN) ? BASE_FN : BALL_FN;
+    ball_interior_fn = is_undef(BALL_INTERIOR_FN) ? BASE_FN : BALL_INTERIOR_FN;
 
     // Basic ball, trimmed flat top and bottom
     difference()
     {
-        sphere(r=TYPEBALL_RAD, $fn=BALL_FN);
+        sphere(r=TYPEBALL_RAD, $fn=ball_fn);
 
         translate([-50,-50, TYPEBALL_TOP_ABOVE_CENTRE-EPSILON])
             cube([100,100,arbitraryRemovalBlockHeight]);
@@ -422,7 +430,7 @@ module Ball()
 
         intersection()
         {
-            sphere(r=sqrt(INSIDE_RAD^2+INSIDE_CURVE_START^2), $fn=BALL_INTERIOR_FN);
+            sphere(r=sqrt(INSIDE_RAD^2+INSIDE_CURVE_START^2), $fn=ball_interior_fn);
             translate([-20,-20,INSIDE_CURVE_START-EPSILON])
                 cube([40,40,20]);
         }
@@ -440,11 +448,12 @@ module Ball()
 //// Detent teeth around bottom of ball
 module DetentTeethSkirt()
 {
+    skirt_fn = is_undef(SKIRT_FN) ? BASE_FN : SKIRT_FN;
     // Detent teeth skirt
     difference()
     {
         translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT])
-        cylinder(r2=TYPEBALL_SKIRT_TOP_RAD, r1=TYPEBALL_SKIRT_BOTTOM_RAD, h=SKIRT_HEIGHT, $fn=160);
+        cylinder(r2=TYPEBALL_SKIRT_TOP_RAD, r1=TYPEBALL_SKIRT_BOTTOM_RAD, h=SKIRT_HEIGHT, $fn=skirt_fn);
 
         translate([0,0, TYPEBALL_SKIRT_TOP_BELOW_CENTRE - SKIRT_HEIGHT-EPSILON])
         DetentTeeth();
@@ -476,18 +485,18 @@ module Tooth()
 module TopFace()
 {
     r = sqrt(TYPEBALL_RAD^2-TYPEBALL_TOP_ABOVE_CENTRE^2);
-
+    ball_fn = is_undef(BALL_FN) ? BASE_FN : BALL_FN;
     // Fill top back in, after the inside sphere was subtracted before this fn was called
     difference()
     {
         translate([0, 0, TYPEBALL_TOP_ABOVE_CENTRE - TYPEBALL_TOP_THICKNESS - RIB_HEIGHT])
-        cylinder(r=r, h=TYPEBALL_TOP_THICKNESS+RIB_HEIGHT);
+        cylinder(r=r, h=TYPEBALL_TOP_THICKNESS+RIB_HEIGHT, $fn=ball_fn);
 
         translate([0, 0, TYPEBALL_TOP_ABOVE_CENTRE - TYPEBALL_TOP_THICKNESS - RIB_HEIGHT - EPSILON])
-        cylinder(h=RIB_HEIGHT/2, r1=r, r2=0);
+        cylinder(h=RIB_HEIGHT/2, r1=r, r2=0, $fn=ball_fn);
 
         translate([0, 0, TYPEBALL_TOP_ABOVE_CENTRE - TYPEBALL_TOP_THICKNESS - RIB_HEIGHT - EPSILON])
-        cylinder(r=BOSS_INNER_RAD,h=TYPEBALL_TOP_THICKNESS*2+RIB_HEIGHT);
+        cylinder(r=BOSS_INNER_RAD,h=TYPEBALL_TOP_THICKNESS*2+RIB_HEIGHT, $fn=ball_fn);
 
         Del();
     }
@@ -521,13 +530,14 @@ module TrimTop()
 // Tilt ring boss assembly
 module CentreBoss()
 {
+    boss_fn = is_undef(BOSS_FN) ? BASE_FN : BOSS_FN;
     translate([0,0, TYPEBALL_TOP_ABOVE_CENTRE - BOSS_HEIGHT])
     difference()
     {
-        cylinder(r=BOSS_OUTER_RAD, h=BOSS_HEIGHT);
+        cylinder(r=BOSS_OUTER_RAD, h=BOSS_HEIGHT,$fn=boss_fn);
 
         translate([0,0,-EPSILON])
-        cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON);
+        cylinder(r=BOSS_INNER_RAD, h=BOSS_HEIGHT+2*EPSILON, $fn=boss_fn);
     }
 }
 

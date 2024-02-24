@@ -376,24 +376,29 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
     platen_fn = is_undef(PLATEN_FN) ? BASE_FN : PLATEN_FN;
 
     typeBaseline = -typeSize/2;
-    rotate([0,0,90])
-    translate([0,0,-2*height]) // remove additional height from the minkowski
-    minkowski() {
-        // Curve letter
-        difference() {
-            // set baseline relative to platen
-            translate([0,typeBaseline,0])
-            // Extrude letter
-            linear_extrude(height=2*height)
-            mirror([1,0,0])
-                text(size=typeSize, font=typeballFont, halign="center", letter, $fn=LETTER_FN);
-            // Platen
-            translate([-PLATEN_WIDTH/2,0,platenDiameter/2+height])
-                rotate([0,90,0])
-                cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=platen_fn);
+    difference() {
+        rotate([0,0,90])
+        translate([0,0,-2*height]) // remove additional height from the minkowski
+        minkowski() {
+            // Curve letter
+            difference() {
+                // set baseline relative to platen
+                translate([0,typeBaseline,0])
+                // Extrude letter
+                linear_extrude(height=2*height)
+                mirror([1,0,0])
+                    text(size=typeSize, font=typeballFont, halign="center", letter, $fn=LETTER_FN);
+                // Platen
+                translate([-PLATEN_WIDTH/2,0,platenDiameter/2+height])
+                    rotate([0,90,0])
+                    cylinder(h=PLATEN_WIDTH, d=platenDiameter,$fn=platen_fn);
+            }
+            // Flared base for the letter.
+            cylinder(h=height*2, r1=2*height, r2=0, $fn=LOFT_FN);
         }
-        // Flared base for the letter.
-        cylinder(h=height*2, r1=2*height, r2=0, $fn=LOFT_FN);
+        translate([-5*height,-5*height,-2.5*height])
+        cube([10*height,10*height,2*height]);
+
     }
 }
 

@@ -42,15 +42,17 @@ TYPEBALL_PITCH = "10";
 // Size in points of labels
 TYPEBALL_LABEL_SIZE = 2; // .1
 // Label spacing
-TYPEBALL_LABEL_SPACING = 1; // .1
+TYPEBALL_LABEL_SPACING = 1.2; // .1
 TYPEBALL_LABEL_OFFSET_FIRST = -0.6; // .1
 TYPEBALL_LABEL_OFFSET_SECOND = 1.8; // .1
 TYPEBALL_LABEL_OFFSET = 0.6; // .1
+TYPEBALL_LABEL_WEIGHT = 0.1; // .01
+DEL_DEPTH=1; // 0.1
 
 /* [Resolution] */
-LETTER_FN = 24;
-BASE_FN=60;
-LOFT_FN = 5;
+LETTER_FN = 44;
+BASE_FN=360;
+LOFT_FN = 6;
 
 LOWER_CASE = str(
     "1234567890-=",
@@ -67,10 +69,11 @@ UPPER_CASE = str(
 );
 
 // Labels on the top of the ball, cosmetic
-module Labels()
+module Labels(weight)
 {
+    $fn = LETTER_FN;
     label_font = len(TYPEBALL_LABEL_FONT) > 0 ? TYPEBALL_LABEL_FONT : TYPEBALL_FONT;
-    offset(r=0.12)
+    offset(r=weight)
     {
         translate([-0.1,14,0])
             text(TYPEBALL_PITCH, size=TYPEBALL_LABEL_SIZE, spacing=TYPEBALL_LABEL_SPACING, font=label_font, halign="center");
@@ -109,6 +112,6 @@ if (FONT_DEMO) {
     difference() {
         TypeBall();
         FontLabel()
-            Labels();
+            Labels(weight=TYPEBALL_LABEL_WEIGHT);
     }
 }

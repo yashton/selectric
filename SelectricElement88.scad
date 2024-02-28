@@ -396,8 +396,9 @@ module LetterTextNew(typeSize, height, typeballFont, letter, platenDiameter=40)
             // Flared base for the letter.
             cylinder(h=height*2, r1=2*height, r2=0, $fn=LOFT_FN);
         }
+        // remove extra base material from minkowski
         translate([-5*height,-5*height,-2.5*height])
-        cube([10*height,10*height,2*height]);
+        cube([12*height,12*height,1.75*height]);
 
     }
 }
